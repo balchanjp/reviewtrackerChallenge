@@ -12,14 +12,14 @@ def create_app():
     return application
 
 app = create_app()
-
+controller = MainController(app)
 @app.route("/")
 def call_hello():
-    MainController.hello()
+    controller.hello()
 
 
 @app.route('/lenders/<lender_id>',methods=['GET'])
-def call_get_lender_reviews(lender_id):
+def call_get_lender_reviews(lender_id=0):
     name = req.args.get("Name")
     vendor_type = req.args.get("VendorType")
     if name is None:
@@ -32,7 +32,7 @@ def call_get_lender_reviews(lender_id):
         raise ExceptionResponse("Name cannot be blank", 400)
     if len(vendor_type) == 0:
         raise ExceptionResponse("Type cannot be blank", 400)
-    return MainController.get_lender_reviews(lender_id,name,vendor_type)
+    return controller.get_lender_reviews(lender_id,name,vendor_type)
 
 @app.route('/reviews', methods=['GET'])
 def call_get_reviews_by_uri(uri):
@@ -42,12 +42,12 @@ def call_get_reviews_by_uri(uri):
     uri = str(uri)
     if len(uri) == 0:
         raise ExceptionResponse("Link cannot be blank")
-
-    @app.errorhandler(ExceptionResponse)
-    def handle_error(error):
-        response = jsonify(error.to_dict())
-        response.status_code = error.status_code
-        return response
+    return controller.get_reviews_by_uri(uri)
+@app.errorhandler(ExceptionResponse)
+def handle_error(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    return response
 
 if __name__ == "__main__":
     app.run()

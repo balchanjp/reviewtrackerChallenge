@@ -15,18 +15,22 @@ class MainController:
 
 
     def get_lender_reviews(self,lender_id, name, vendor_type):
-        base_uri = "https://www.lendingtree.com{}{}/{}/{}"
+        base_uri = "https://www.lendingtree.com/reviews/{}/{}/{}"
         full_uri = None
-        if lender_id is None:
-            short_uri = base_uri.format('/reviews/',vendor_type,name,'')
+        if lender_id is not None and lender_id != '0':
+            print("im in here")
+            full_uri = base_uri.format(vendor_type, name, lender_id)
+        else:
+            short_uri = "https://www.lendingtree.com/reviews/{}/{}".format(vendor_type,name).replace(' ','-')
+            print(short_uri)
             response = request("GET", short_uri)
+
             soup = BeautifulSoup(response.text, 'html.parser')
-            endpoint = soup.find("a", {"class": "all-customer-review-link"})['href']
+            endpoint = soup.find("a", {"class": "all-customer-review-link"})
+            print(endpoint)
             if endpoint is None:
                 raise ExceptionResponse("Couldnt find full reviews uri for lender", 500)
-            full_uri = base_uri.format(endpoint,'','','')
-        else:
-            full_uri = base_uri.format('/reviews/',vendor_type,name,lender_id)
+            full_uri = "https://www.lendingtree.com{}".format(endpoint['href'])
         lender = Lender(name.title())
         return self.get_reviews_by_uri(full_uri, lender)
 

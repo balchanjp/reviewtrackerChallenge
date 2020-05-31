@@ -19,5 +19,11 @@ class TestController:
         assert response_json['name'] == 'Wyndham Capital Mortgage'
         assert len(response_json['reviews']) > 1
 
+    def test_fetch_by_vendor(self):
+        response = self.controller.get_lender_reviews("1127425","wyndham-capital-mortgage", "mortgage")
+        assert response.status_code == 200
+        response_json = json.loads(response.data.decode('utf-8'))
+        assert response_json['name'] == 'Wyndham Capital Mortgage'
+        assert len(response_json['reviews']) > 1
 
 
