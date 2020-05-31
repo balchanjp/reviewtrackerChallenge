@@ -36,6 +36,8 @@ class MainController:
 
     def get_reviews_by_uri(self,uri=None, lender=None):
         response = None
+        if "lendingtree" not in str(uri):
+            raise ExceptionResponse("Invalid URI/parameters passed", 400)
         try:
             response = request("GET", uri)
         except:
