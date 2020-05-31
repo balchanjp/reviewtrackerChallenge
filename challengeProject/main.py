@@ -44,7 +44,7 @@ def get_lender_reviews(lender_id):
     return get_reviews_by_uri(full_uri, lender)
 
 @app.route('/reviews', methods=['GET'])
-def get_reviews_by_uri(uri, lender):
+def get_reviews_by_uri(uri=None, lender=None):
     if uri is None:
         uri=req.args.get("Link")
     if uri is None:
