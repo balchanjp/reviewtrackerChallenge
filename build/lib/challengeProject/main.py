@@ -4,8 +4,6 @@ from flask import request as req
 from bs4 import BeautifulSoup
 from challengeProject.models import *
 import re
-
-
 def create_app():
     application = Flask(__name__)
     application.config["JSONIFY_PRETTYPRINT_REGULAR"] = True

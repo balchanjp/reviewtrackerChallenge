@@ -1,6 +1,6 @@
 
 class Review:
-    def __init__(self, title=None, text=None, author=None, star_rating=None, date=None, loan_type=None):
+    def __init__(self, title=None, text=None, author=None, date=None, star_rating=None, loan_type=None):
         self.title = title
         self.text = text
         self.author = author
