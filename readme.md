@@ -2,6 +2,8 @@
 
 This is a project made to answer gist.github.com/nvreynolds/c43c9c28c27f76488de2a85da33683ff
 
+This was the first time I have ever used the pytest testing module
+
 ## Installation
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the challengeProject. Should be using python3
@@ -22,6 +24,11 @@ both of which are used to pull review data from lendingtree.com
 ## Usage
 ```bash
 FLASK_APP=challengeProject/main.py flask run
+```
+
+testing
+```bash
+pytest .
 ```
 
 ## Contributing
